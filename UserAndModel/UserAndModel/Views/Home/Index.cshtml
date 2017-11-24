@@ -1,0 +1,46 @@
+﻿@model UserAndModel.Models.SexyModel
+@using System.Data.SqlClient;
+
+<script>
+    function goAhead(id) {
+        const yesOrNo = confirm("Are you sure my friend?");
+        if (yesOrNo) window.location.href = (id);
+    }
+</script>
+
+@{
+    ViewBag.Title = "Index";
+}
+<h2>Can you see? Can you see?</h2>
+
+<table>
+    <tr>
+        <td>CIN</td>
+        <td>Name</td>
+        <td>Address</td>
+        <td>Contact number</td>
+        <td>Operation</td>
+    </tr>
+    @{SqlConnection con;
+        SqlCommand cmd;
+        con = new SqlConnection();
+        con.ConnectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=c:\\users\\admin\\source\\repos\\UserAndModel\\UserAndModel\\App_Data\\Database1.mdf;Integrated Security=True";
+        con.Open();
+        cmd = con.CreateCommand();
+        cmd.CommandText = "select * From people";
+        SqlDataReader data = cmd.ExecuteReader();
+        while (data.Read())
+        {
+            <tr>
+                <td>@data["CIN"]</td>
+                <td>@data["Name"]</td>
+                <td>@data["Address"]</td>
+                <td>@data["telephone"]</td>
+                <td><a href="/edit/@data["CIN"]">edit</a>,<a id="/delete/@data["CIN"]" onclick="goAhead(id)">delete</a></td>
+            </tr>
+        }
+    }
+</table>
+
+Add a new person <a href="/newEntry">HERE</a>
+

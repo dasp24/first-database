@@ -1,0 +1,15 @@
+﻿@model UserAndModel.Models.SexyModel
+
+@{
+    ViewBag.Title = "newEntry";
+}
+
+<h2>newEntry</h2>
+@{String Path = ViewData["update"] != null ? $"/update/{ViewData["update"]}" : "/add"; }
+<form action=@Path method="post">
+    Name: <input type="text" name="name" /><br />
+    Address: <input type="text" name="address" /><br />
+    contact info<input type="text" name="number" /><br />
+    <input type="submit" />
+</form>
+
