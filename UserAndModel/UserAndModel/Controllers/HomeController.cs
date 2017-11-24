@@ -12,6 +12,8 @@ namespace UserAndModel.Controllers
 {
     public class HomeController : Controller
     {
+        SqlConnection con;
+        SqlCommand cmd;
         // GET: Home
         public ActionResult Index()
         {
@@ -22,14 +24,18 @@ namespace UserAndModel.Controllers
             return View();
         }
 
-        public ActionResult Add(SexyModel x)
+        public void connectToServer()
         {
-            SqlConnection con;
-            SqlCommand cmd;
             con = new SqlConnection();
-            con.ConnectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=c:\\users\\admin\\source\\repos\\UserAndModel\\UserAndModel\\App_Data\\Database1.mdf;Integrated Security=True";
+            con.ConnectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=c:\\users\\admin\\source\\repos\\first-database\\UserAndModel\\UserAndModel\\App_Data\\Database1.mdf;Integrated Security=True";
             con.Open();
             cmd = con.CreateCommand();
+        }
+
+        public ActionResult Add(SexyModel x)
+        {
+
+            connectToServer();
             cmd.CommandText = $"insert into people values('{x.name}','{x.Address}','{x.number}')";
             cmd.ExecuteNonQuery();
             return View("Index");
@@ -37,12 +43,7 @@ namespace UserAndModel.Controllers
         }
         public ActionResult Update(SexyModel x,int cin)
         {
-            SqlConnection con;
-            SqlCommand cmd;
-            con = new SqlConnection();
-            con.ConnectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=c:\\users\\admin\\source\\repos\\UserAndModel\\UserAndModel\\App_Data\\Database1.mdf;Integrated Security=True";
-            con.Open();
-            cmd = con.CreateCommand();
+            connectToServer();
             cmd.CommandText = $"UPDATE people SET Name = '{x.name}',address = '{x.Address}',telephone ='{x.number}' where CIN = {cin}";
             cmd.ExecuteNonQuery();
             return View("Index");
@@ -59,12 +60,7 @@ namespace UserAndModel.Controllers
         public ActionResult Delete(SexyModel x, int cin)
         {
 
-            SqlConnection con;
-            SqlCommand cmd;
-            con = new SqlConnection();
-            con.ConnectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=c:\\users\\admin\\source\\repos\\UserAndModel\\UserAndModel\\App_Data\\Database1.mdf;Integrated Security=True";
-            con.Open();
-            cmd = con.CreateCommand();
+            connectToServer();
             cmd.CommandText = $"DELETE FROM people WHERE CIN = {cin}";
             cmd.ExecuteNonQuery();
             con.Close();

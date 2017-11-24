@@ -24,7 +24,7 @@
     @{SqlConnection con;
         SqlCommand cmd;
         con = new SqlConnection();
-        con.ConnectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=c:\\users\\admin\\source\\repos\\UserAndModel\\UserAndModel\\App_Data\\Database1.mdf;Integrated Security=True";
+        con.ConnectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=c:\\users\\admin\\source\\repos\\first-database\\UserAndModel\\UserAndModel\\App_Data\\Database1.mdf;Integrated Security=True";
         con.Open();
         cmd = con.CreateCommand();
         cmd.CommandText = "select * From people";
